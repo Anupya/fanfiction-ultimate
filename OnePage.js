@@ -52,14 +52,15 @@ function RetrieveStory() {
     shadingDiv.setAttribute('id', 'FullStoryShadingDiv');
 
     /* create a style tag using JavaScript */
-    var head = document.getElementsByTagName('head')[0];
-    var style = document.createElement('link'); /* defines the link to a CSS file */
+    var head = document.getElementsByTagName('head')[0],
+        style = document.createElement('style'),
+        rules = document.createTextNode('.a2a_kit, a2a_default_style { display: none; }');
 
-    style.rel = 'stylesheet';
     style.type = 'text/css';
-    style.href = 'css/main.css';
-    console.log(style);
 
+    if (style.styleSheet)
+        style.styleSheet.cssText = rules.nodeValue;
+    else style.appendChild(rules);
     head.appendChild(style);
 
 
@@ -71,12 +72,12 @@ function RetrieveStory() {
         'font: 13px Verdana;',
         'z-index: 2;',
         'position: absolute;',
-        'top: 267px;',
+        'top: 0px;',
         'left: 0px;',
         'right: 0px;',
-        'width:  100%;',
-        'padding: 0px 0.5em;',
+        'width: 100%;',
         'align: center;',
+        'padding: 50px;',
         'word-wrap: break-word;'
 
     ].join(' ');
@@ -86,7 +87,7 @@ function RetrieveStory() {
         'background-color: black;',
         'margin: 0;',
         'z-index: 1;',
-        'position:absolute;',
+        'position: absolute;',
         'top: 0px;',
         'left: 0px;',
         'right: 0px;',
@@ -132,18 +133,24 @@ function FinishStory() {
     //Add utilities to top of page
     var resultClose = document.createElement('a');
     resultClose.setAttribute('href', 'javascript:void(0);');
-    resultClose.setAttribute('onclick', 'javascript:FullStoryResultDiv.style.display="none";FullStoryShadingDiv.style.display="none";');
+    resultClose.setAttribute('onclick', 
+        'javascript:FullStoryResultDiv.style.display="none";FullStoryShadingDiv.style.display="none";');
     resultClose.appendChild(document.createTextNode("Chapter-by-chapter"));
 
     var resultSelectAll = document.createElement('a');
     resultSelectAll.setAttribute('href', 'javascript:void(0);');
-    resultSelectAll.setAttribute('onclick', 'javascript: selection = window.getSelection();range = document.createRange();range.selectNodeContents(document.getElementById("FullStoryResultDiv"));selection.removeAllRanges();selection.addRange(range);');
+    resultSelectAll.setAttribute('onclick', 
+        'javascript: selection = window.getSelection();\
+        range = document.createRange();range.selectNodeContents(document.getElementById("FullStoryResultDiv"));\
+        selection.removeAllRanges();selection.addRange(range);');
     resultSelectAll.appendChild(document.createTextNode("Select All"));
 
     //Print looks funny
     var print = document.createElement('a');
     print.setAttribute('href', 'javascript:void(0);');
-    print.setAttribute('onclick', 'document.body.innerHTML = FullStoryResultDiv.innerHTML; FullStoryResultDiv.parentNode.removeChild(FullStoryResultDiv); window.print();');
+    print.setAttribute('onclick', 
+        'document.body.innerHTML = FullStoryResultDiv.innerHTML; \
+        FullStoryResultDiv.parentNode.removeChild(FullStoryResultDiv); window.print();');
     print.appendChild(document.createTextNode("Save PDF"));
 
     resultDiv.appendChild(resultClose);
@@ -194,6 +201,7 @@ function ParseStoryContent(story, chapter) {
         if (completedChapters >= storyChapters.length) {
             resultDiv.innerHTML = "";
 
+            console.log(storyChapters);
             FinishStory();
         } 
         else {

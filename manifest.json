@@ -26,19 +26,24 @@
 */
 {
     "update_url": "https://clients2.google.com/service/update2/crx",
-    "name": "Fanfiction Ultimate",
-    "version": "1.0",
-    "manifest_version": 1,
-    "description": "Consolidates Fan Fiction stories for easier reading and saving.",
+    "name": "FanfictionUltimate",
+    "version": "1.0.0",
+    "manifest_version": 2,
+    "description": "The ultimate FanFiction.net Chrome Extension to meet your fangirl needs.",
     "background": {
         "scripts": [
             "background.js"
         ]
     },
+    "content_scripts": [{
+      "js": ["entireWork.js"],
+      "matches": ["*://www.fanfiction.net/s/*"],
+      "run_at": "document_start"
+    }],
     "default_locale": "en",
     "page_action": {
         "default_icon": "icon.png",
-        "default_title": "Export Story"
+        "default_title": "FanFictionUltimate"
     },
     "permissions": [
         "unlimitedStorage",
