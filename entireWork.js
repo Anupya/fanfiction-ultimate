@@ -35,9 +35,8 @@ window.onload = function () {
 
 	].join(' ');
 
-	
 
-	document.querySelector('#entireWork').onmouseover = function () {
+	button.onmouseover = function () {
 		button.style.cssText.boxShadow = "inset 0 2px 4px rgba(0,0,0,0.15), 0 1px 2px rgba(0,0,0,0.5)";
 		/*button.style.cssText = [
 			'color: #333;',
@@ -62,7 +61,7 @@ window.onload = function () {
 		document.querySelector('#content_wrapper_inner > span').appendChild(button);
 	};
 
-	document.querySelector('#entireWork').onmouseout = function () {
+	button.onmouseout = function () {
 		button.style.cssText.boxShadow = "inset 0 1px 0 rgba(255,255,255,0.2), 0 1px 2px rgba(0,0,0,0.05);";
 		/*button.style.cssText = [
 			'color: #333;',
@@ -86,4 +85,11 @@ window.onload = function () {
 		*/
 		document.querySelector('#content_wrapper_inner > span').appendChild(button);
 	};
+
+	/* this can solve the execute script problem: https://stackoverflow.com/questions/32398709/chrome-object-or-chrome-tabs-object-not-accessible-from-script-other-than-a-back */
+	button.onclick =  function () {
+    chrome.tabs.executeScript( null, {
+        file: "OnePage.js"
+    });
+}
 }

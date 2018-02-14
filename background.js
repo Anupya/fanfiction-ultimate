@@ -15,7 +15,7 @@ chrome.tabs.onUpdated.addListener(checkForValidUrl); /* when user changes URL of
 chrome.tabs.onActivated.addListener(function(tabId, info) {
     selectedId = tabId;
 });
-document.querySelector('#entireWork').onclick =  function () {
+document.getElementById('entireWork').onclick =  function () {
     chrome.tabs.executeScript(null, {
         file: "OnePage.js"
     });
