@@ -1,5 +1,7 @@
+
+/*
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
 
   "name": "Getting started example",
   "description": "This extension allows the user to change the background color of the current page.",
@@ -10,9 +12,37 @@
     "default_popup": "popup.html",
     "default_title": "Click here!"
   },
+  "background": {
+    "scripts": [
+      "background.js"
+    ]
+  },
   "default_locale": "en",
   "permissions": [
     "activeTab",
     "storage"
   ]
+}
+*/
+{
+    "update_url": "https://clients2.google.com/service/update2/crx",
+    "name": "Fanfiction Ultimate",
+    "version": "1.0",
+    "manifest_version": 1,
+    "description": "Consolidates Fan Fiction stories for easier reading and saving.",
+    "background": {
+        "scripts": [
+            "background.js"
+        ]
+    },
+    "default_locale": "en",
+    "page_action": {
+        "default_icon": "icon.png",
+        "default_title": "Export Story"
+    },
+    "permissions": [
+        "unlimitedStorage",
+        "tabs",
+        "*://www.fanfiction.net/*"
+    ]
 }
