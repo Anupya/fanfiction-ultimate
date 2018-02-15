@@ -31,7 +31,6 @@ var targetLocation;
 function SelectStoryText() {
     var sel = window.getSelection();
     var range = document.createRange();
-    range.selectNodeContents(document.getElementByID("FullStoryShadingDiv"));
     sel.removeAllRanges();
     sel.addRange(range);
 }
@@ -45,11 +44,12 @@ function SelectStoryText() {
 
 function RetrieveStory() {
     /* creating HTML-like code */
-    var shadingDiv = document.createElement('div');
+    if (document.querySelector('#chap_select') == null) {
+        return;
+    }
     resultDiv = document.createElement('div');
     scratchDiv = document.createElement('div');
     resultDiv.setAttribute('id', 'FullStoryResultDiv');
-    shadingDiv.setAttribute('id', 'FullStoryShadingDiv');
 
     /* create a style tag using JavaScript */
     var head = document.getElementsByTagName('head')[0],
@@ -71,35 +71,24 @@ function RetrieveStory() {
         'margin: 0',
         'font: 13px Verdana;',
         'z-index: 2;',
-        'position: absolute;',
+        'position: relative;',
         'top: 0px;',
         'left: 0px;',
         'right: 0px;',
-        'width: 100%;',
+        'width: 80%;',
         'align: center;',
-        'padding: 50px;',
+        'padding: 35px;',
+        'border: 10px black;',
         'word-wrap: break-word;'
 
     ].join(' ');
 
-    /* FullStoryShadingDiv */
-    shadingDiv.style.cssText = [
-        'background-color: black;',
-        'margin: 0;',
-        'z-index: 1;',
-        'position: absolute;',
-        'top: 0px;',
-        'left: 0px;',
-        'right: 0px;',
-        'width: auto',
-        'height: auto;',
-        'opacity: 0.5;'
-
-    ].join(' ');
-
     document.body.style.cssText = 'position: relative';
-    document.body.parentElement.insertBefore(resultDiv, document.body);
-    document.body.appendChild(shadingDiv);
+    document.querySelector('.storytextp').insertBefore(resultDiv, document.querySelector('#storytext'));
+    document.querySelector('#storytext').style.display = 'none';
+    document.querySelector("#content_wrapper_inner > div:nth-child(13)").style.display = "none";
+    document.querySelector('#content_wrapper_inner > span').style.display = "none";
+    /* document.body.parentElement.insertBefore(resultDiv, document.body); */
 
 
     if (document.getElementById("storytextp") == null) {
@@ -130,13 +119,17 @@ function FinishStory() {
         floatingBars[i].style.zIndex = 1;
     }
 
-    //Add utilities to top of page
+    //Chapter by Chapter
     var resultClose = document.createElement('a');
     resultClose.setAttribute('href', 'javascript:void(0);');
     resultClose.setAttribute('onclick', 
-        'javascript:FullStoryResultDiv.style.display="none";FullStoryShadingDiv.style.display="none";');
+        'FullStoryResultDiv.parentNode.removeChild(FullStoryResultDiv);\
+        document.querySelector("#storytext").style.display = "block";\
+        document.querySelector("#content_wrapper_inner > div:nth-child(13)").style.display = "block"; \
+        document.querySelector("#content_wrapper_inner > span").style.display = "block";');
     resultClose.appendChild(document.createTextNode("Chapter-by-chapter"));
 
+    //Select All
     var resultSelectAll = document.createElement('a');
     resultSelectAll.setAttribute('href', 'javascript:void(0);');
     resultSelectAll.setAttribute('onclick', 
@@ -145,20 +138,20 @@ function FinishStory() {
         selection.removeAllRanges();selection.addRange(range);');
     resultSelectAll.appendChild(document.createTextNode("Select All"));
 
-    //Print looks funny
-    var print = document.createElement('a');
-    print.setAttribute('href', 'javascript:void(0);');
-    print.setAttribute('onclick', 
-        'document.body.innerHTML = FullStoryResultDiv.innerHTML; \
-        FullStoryResultDiv.parentNode.removeChild(FullStoryResultDiv); window.print();');
-    print.appendChild(document.createTextNode("Save PDF"));
+
+    //Save as PDF
+    /*
+    var script = document.createElement('script');
+    script.src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.debug.js";
+    script.type = 'text/javascript';
+    document.getElementsByTagName('head')[0].appendChild(script);
+    */
+
 
     resultDiv.appendChild(resultClose);
     resultDiv.innerHTML += "&nbsp;&nbsp;&nbsp;&nbsp;"
     resultDiv.appendChild(resultSelectAll);
     resultDiv.innerHTML += "&nbsp;&nbsp;&nbsp;&nbsp;"
-    resultDiv.appendChild(print);
-    resultDiv.innerHTML += "<br><br>";
 
     var title = document.title;
 
@@ -169,19 +162,21 @@ function FinishStory() {
     /* Dear Cas - 59 chapters */
     /* var story = "<h1>" + title + " - " + storyChapters.length + " chapters</h1><br />"; */
     var story = "<h1>" + title + "</h1>";
+    story += "<br /><br /><br /><br />";
     /* story += "<h2>" + storyChapters.length + " chapters</h2><br />"; */
 
     /* Chapter 1
     blah blah blah ...
     */
     for (var i = 0; i < storyChapters.length; i++) {
-        story += "<br /><br /><h3>Chapter " + (i + 1) + " </h3><br /><br /><br /><br /><br />";
+        story += "<br /><br /><h3>Chapter " + (i + 1) + " </h3><br /><br />";
         story += storyChapters[i];
-        story += "<br /><hr />";
+        story += "<br /><hr>";
     }
 
     resultDiv.innerHTML += story;
-    resultDiv.innerHTML += "<br /><br /><center>-- Thank you for using FanfictionUltimate <3 --</center>";
+    resultDiv.innerHTML += "<br /><br /><br /><br /><br /><br /><br /><center>--- Thank you for using FanfictionUltimate: the ultimate \
+        Chrome Extension for fanfiction.net lovers <3 ---</center>";
 }
 
 function ParseStoryContent(story, chapter) {
