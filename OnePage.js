@@ -134,7 +134,7 @@ function FinishStory() {
     resultSelectAll.setAttribute('href', 'javascript:void(0);');
     resultSelectAll.setAttribute('onclick', 
         'javascript: selection = window.getSelection();\
-        range = document.createRange();range.selectNodeContents(document.getElementById("FullStoryResultDiv"));\
+        range = document.createRange();range.selectNodeContents(document.querySelector("#FullStoryResultDiv"));\
         selection.removeAllRanges();selection.addRange(range);');
     resultSelectAll.appendChild(document.createTextNode("Select All"));
 
