@@ -129,7 +129,11 @@ function FinishStory() {
         document.querySelector("#content_wrapper_inner > div:nth-child(13)").style.display = "block"; \
         document.querySelector("#content_wrapper_inner > span").style.display = "block";');
     resultClose.style.cssText = [
-        'margin-left: 5px;'
+        'margin-left: 5px;',
+        'float: right;',
+        'right: -13%;',
+        'position: relative;',
+        'top: -40px;'
     ].join(' ');
 
     //Select All
@@ -144,7 +148,11 @@ function FinishStory() {
         selection.addRange(range);"); /* it's executing this but doing nothing */
 
     resultSelectAll.style.cssText = [
-        'margin-left: 5px;'
+        'margin-left: 5px;',
+        'float: right;',
+        'right: -13%;',
+        'position: relative;',
+        'top: -40px;'
     ].join(' ');
 
     resultDiv.appendChild(resultSelectAll);
@@ -168,6 +176,7 @@ function FinishStory() {
     /* Chapter 1
     blah blah blah ...
     */
+
     for (var i = 0; i < storyChapters.length; i++) {
         story += "<br /><br /><h3>Chapter " + (i + 1) + " </h3><br /><br />";
         story += storyChapters[i];
