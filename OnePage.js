@@ -27,21 +27,6 @@ var resultDiv;
 var scratchDiv;
 var targetLocation;
 
-
-function SelectStoryText() {
-    var sel = window.getSelection();
-    var range = document.createRange();
-    sel.removeAllRanges();
-    sel.addRange(range);
-}
-/* 
-    get a selection of text from the window
-    create a range in the document
-    everything in that range is contents of FullStoryShadingDiv
-    remove anything selected in the window
-    adds range object to selection
-*/
-
 function RetrieveStory() {
     /* creating HTML-like code */
     if (document.querySelector('#chap_select') == null) {
@@ -88,6 +73,9 @@ function RetrieveStory() {
     document.querySelector('#storytext').style.display = 'none';
     document.querySelector("#content_wrapper_inner > div:nth-child(13)").style.display = "none";
     document.querySelector('#content_wrapper_inner > span').style.display = "none";
+    document.querySelector('#download').style.display="block";
+    resultDiv.appendChild(document.querySelector('#download'));
+
     /* document.body.parentElement.insertBefore(resultDiv, document.body); */
 
 
@@ -95,21 +83,25 @@ function RetrieveStory() {
         alert("No story on this page!");
     } 
     else {
-        var chaptersDropdown = document.getElementsByName("chapter");
-        var chapters = 1;
-
-        if (chaptersDropdown.length != 0) {
-            chapters = chaptersDropdown[0].options.length;
-        }
-
-        var tmpLocation = self.location.href.substring(self.location.href.indexOf("fanfiction.net/s/") + 17);
-        tmpLocation = tmpLocation.substring(0, tmpLocation.indexOf("/"));
-        targetLocation = "https://www.fanfiction.net/s/" + tmpLocation + "/t('.'t)";
-
-        storyChapters = new Array(chapters);
-        completedChapters = 0;
-        fetchPage(ParseStoryContent, targetLocation.replace("t('.'t)", 1), 0);
+        StartRetrieving();
     }
+}
+
+function StartRetrieving() {
+    var chaptersDropdown = document.getElementsByName("chapter");
+    var chapters = 1;
+
+    if (chaptersDropdown.length != 0) {
+        chapters = chaptersDropdown[0].options.length;
+    }
+
+    var tmpLocation = self.location.href.substring(self.location.href.indexOf("fanfiction.net/s/") + 17);
+    tmpLocation = tmpLocation.substring(0, tmpLocation.indexOf("/"));
+    targetLocation = "https://www.fanfiction.net/s/" + tmpLocation + "/t('.'t)";
+
+    storyChapters = new Array(chapters);
+    completedChapters = 0;
+    fetchPage(ParseStoryContent, targetLocation.replace("t('.'t)", 1), 0);
 }
 
 function FinishStory() {
@@ -151,21 +143,16 @@ function FinishStory() {
 
     resultClose.appendChild(document.createTextNode("Chapter-by-chapter"));
 
-/*
-    selection = window.getSelection();
-    range=document.createRange();
-    range.selectNodeContents(document.querySelector("#FullStoryResultDiv"));
-    selection.removeAllRanges();
-    selection.addRange(range);
-*/
 
     //Select All
     var resultSelectAll = document.createElement('a');
     resultSelectAll.setAttribute('href', 'javascript:void(0);');
     resultSelectAll.setAttribute('onclick', 
-        'javascript:selection=window.getSelection();\
-        range = document.createRange();range.selectNodeContents(document.querySelector("#selectable"));\
-        selection.removeAllRanges();selection.addRange(range);');
+        'javascript:range=document.createRange();selection=window.getSelection(); \
+        range.selectNodeContents(document.querySelector("#FullStoryResultDiv")); \
+        selection.removeAllRanges();\
+        selection.addRange(range);'); /* it's executing this but doing nothing */
+
     resultSelectAll.style.cssText = [
         'color: #333;',
         'text-align: center;',
@@ -198,9 +185,9 @@ function FinishStory() {
     document.getElementsByTagName('head')[0].appendChild(script);
     */
 
-    resultDiv.insertBefore(resultSelectAll, document.querySelector('#selectable'));
+    resultDiv.appendChild(resultSelectAll);
     resultDiv.innerHTML += "&nbsp;&nbsp;&nbsp;&nbsp;"
-    resultDiv.insertBefore(resultClose, document.querySelector('#selectable'));
+    resultDiv.appendChild(resultClose);
     resultDiv.innerHTML += "&nbsp;&nbsp;&nbsp;&nbsp;"
     
 
