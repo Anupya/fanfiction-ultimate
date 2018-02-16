@@ -21,7 +21,7 @@ window.onload = function () {
         'border: 1px solid #ccc;',
         'background-image: linear-gradient(to bottom, #fff, #e6e6e6);',
         'position: relative;',
-        'left: 4px;',
+        'left: 5px;',
         'right: 10px;'
 
     ].join(' ');
@@ -102,7 +102,8 @@ window.onload = function () {
         'border: 1px solid #ccc;',
         'background-image: linear-gradient(to bottom, #fff, #e6e6e6);',
         'position: relative;',
-        'left: 4px;',
+        'margin-left: 5px;',
+        'left: 5px;',
         'right: 10px;'
 
     ].join(' ');

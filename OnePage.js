@@ -45,10 +45,10 @@ function SelectStoryText() {
 function RetrieveStory() {
     /* creating HTML-like code */
     if (document.querySelector('#chap_select') == null) {
+        alert('This is a one-shot!');
         return;
     }
     resultDiv = document.createElement('div');
-    scratchDiv = document.createElement('div');
     resultDiv.setAttribute('id', 'FullStoryResultDiv');
 
     /* create a style tag using JavaScript */
@@ -127,15 +127,66 @@ function FinishStory() {
         document.querySelector("#storytext").style.display = "block";\
         document.querySelector("#content_wrapper_inner > div:nth-child(13)").style.display = "block"; \
         document.querySelector("#content_wrapper_inner > span").style.display = "block";');
+    resultClose.style.cssText = [
+        'color: #333;',
+        'text-align: center;',
+        'width: auto;',
+        'height: 18px;',
+        'background: white;',
+        'cursor: pointer;',
+        'text-shadow: 0 1px 1px rgba(255,255,255,0.75);',
+        'border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) rgba (0,0,0,0.25);',
+        'border-bottom-color: #b3b3b3;',
+        'padding: 4px 12px;',
+        'border-radius: 4px;',
+        'border: 1px solid #ccc;',
+        'background-image: linear-gradient(to bottom, #fff, #e6e6e6);',
+        'position: relative;',
+        'left: 5px;',
+        'right: 10px;',
+        'float: right;',
+        'margin-right: 5px;',
+        'top: -30px;'
+    ].join(' ');
+
     resultClose.appendChild(document.createTextNode("Chapter-by-chapter"));
+
+/*
+    selection = window.getSelection();
+    range=document.createRange();
+    range.selectNodeContents(document.querySelector("#FullStoryResultDiv"));
+    selection.removeAllRanges();
+    selection.addRange(range);
+*/
 
     //Select All
     var resultSelectAll = document.createElement('a');
     resultSelectAll.setAttribute('href', 'javascript:void(0);');
     resultSelectAll.setAttribute('onclick', 
-        'javascript: selection = window.getSelection();\
-        range = document.createRange();range.selectNodeContents(document.querySelector("#FullStoryResultDiv"));\
+        'javascript:selection=window.getSelection();\
+        range = document.createRange();range.selectNodeContents(document.querySelector("#selectable"));\
         selection.removeAllRanges();selection.addRange(range);');
+    resultSelectAll.style.cssText = [
+        'color: #333;',
+        'text-align: center;',
+        'width: auto;',
+        'height: 18px;',
+        'background: white;',
+        'cursor: pointer;',
+        'text-shadow: 0 1px 1px rgba(255,255,255,0.75);',
+        'border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) rgba (0,0,0,0.25);',
+        'border-bottom-color: #b3b3b3;',
+        'padding: 4px 12px;',
+        /*'box-shadow: inset 0 1px 0 rgba(255,255,255,0.2), 0 1px 2px rgba(0,0,0,0.05);',*/
+        'border-radius: 4px;',
+        'border: 1px solid #ccc;',
+        'background-image: linear-gradient(to bottom, #fff, #e6e6e6);',
+        'position: relative;',
+        'left: 5px;',
+        'float: right;',
+        'top: -30px;'
+    ].join(' ');
+
     resultSelectAll.appendChild(document.createTextNode("Select All"));
 
 
@@ -147,11 +198,11 @@ function FinishStory() {
     document.getElementsByTagName('head')[0].appendChild(script);
     */
 
-
-    resultDiv.appendChild(resultClose);
+    resultDiv.insertBefore(resultSelectAll, document.querySelector('#selectable'));
     resultDiv.innerHTML += "&nbsp;&nbsp;&nbsp;&nbsp;"
-    resultDiv.appendChild(resultSelectAll);
+    resultDiv.insertBefore(resultClose, document.querySelector('#selectable'));
     resultDiv.innerHTML += "&nbsp;&nbsp;&nbsp;&nbsp;"
+    
 
     var title = document.title;
 
@@ -161,7 +212,7 @@ function FinishStory() {
 
     /* Dear Cas - 59 chapters */
     /* var story = "<h1>" + title + " - " + storyChapters.length + " chapters</h1><br />"; */
-    var story = "<h1>" + title + "</h1>";
+    var story = "<br /><br /><br /><h1>" + title + "</h1>";
     story += "<br /><br /><br /><br />";
     /* story += "<h2>" + storyChapters.length + " chapters</h2><br />"; */
 
