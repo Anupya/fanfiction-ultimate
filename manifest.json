@@ -29,7 +29,7 @@
     "name": "FanfictionUltimate",
     "version": "1.0.0",
     "manifest_version": 2,
-    "description": "The ultimate FanFiction.net Chrome Extension to meet your fangirl needs.",
+    "description": "The ultimate FanFiction.net Chrome Extension for the best fanfic experience.",
     "background": {
         "scripts": [
             "background.js"
