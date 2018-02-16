@@ -54,7 +54,7 @@ function FinishStory() {
     /* Dear Cas - 59 chapters */
     /* var story = "<h1>" + title + " - " + storyChapters.length + " chapters</h1><br />"; */
     var story = "<br /><br /><br /><h1>" + title + "</h1>";
-    story += "<br /><br /><br /><br />";
+    story += "<br /><br />";
     /* story += "<h2>" + storyChapters.length + " chapters</h2><br />"; */
 
     /* Chapter 1
