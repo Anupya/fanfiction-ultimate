@@ -136,6 +136,7 @@ function FinishStory() {
         'top: -40px;'
     ].join(' ');
 
+/*
     //Select All
     var resultSelectAll = document.createElement('button');
     resultSelectAll.innerHTML = "Select All";
@@ -143,9 +144,10 @@ function FinishStory() {
     resultSelectAll.setAttribute('id', 'select-all');
     resultSelectAll.setAttribute('onclick', 
         "javascript:range=document.createRange();selection=window.getSelection(); \
-        range.selectNodeContents(document.querySelector('.storytext')); \
+        range.selectNodeContents(document.querySelector('#content_parent')); \
         selection.removeAllRanges();\
-        selection.addRange(range);"); /* it's executing this but doing nothing */
+        selection.addRange(range);\
+        alert('You clicked Select all');");
 
     resultSelectAll.style.cssText = [
         'margin-left: 5px;',
@@ -157,6 +159,7 @@ function FinishStory() {
 
     resultDiv.appendChild(resultSelectAll);
     resultDiv.innerHTML += "&nbsp;&nbsp;&nbsp;&nbsp;"
+    */
     resultDiv.appendChild(resultClose);
     resultDiv.innerHTML += "&nbsp;&nbsp;&nbsp;&nbsp;"
     

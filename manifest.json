@@ -1,29 +1,3 @@
-
-/*
-{
-  "manifest_version": 3,
-
-  "name": "Getting started example",
-  "description": "This extension allows the user to change the background color of the current page.",
-  "version": "1.0",
-
-  "browser_action": {
-    "default_icon": "icon.png",
-    "default_popup": "popup.html",
-    "default_title": "Click here!"
-  },
-  "background": {
-    "scripts": [
-      "background.js"
-    ]
-  },
-  "default_locale": "en",
-  "permissions": [
-    "activeTab",
-    "storage"
-  ]
-}
-*/
 {
     "update_url": "https://clients2.google.com/service/update2/crx",
     "name": "FanfictionUltimate",
@@ -35,19 +9,26 @@
             "background.js"
         ]
     },
+    "homepage_url": "https://anupya.github.io",
     "content_scripts": [{
       "js": ["CS_buttons.js"],
       "matches": ["*://www.fanfiction.net/s/*"],
       "run_at": "document_start"
     }],
     "default_locale": "en",
-    "page_action": {
-        "default_icon": "icon.png",
+    "browser_action": {
+        "default_icon": "icon_16.png",
         "default_title": "FanFictionUltimate"
+    },
+    "icons": {
+      "16": "icon_16.png",
+      "48": "icon_48.png",
+      "128": "icon_128.png"
     },
     "permissions": [
         "unlimitedStorage",
         "tabs",
-        "*://www.fanfiction.net/*"
+        "*://www.fanfiction.net/*",
+        "chrome://favicon/"
     ]
 }
