@@ -1,10 +1,10 @@
 
 /* For the curious minds...
 
-I was originally going to use JSPDF to create the smooth experience of the file automatically downloading to downloads lik A03.
-After figuring out the whole thing, I realized that JSPDF does not support UTF-8 encoding which caused the PDFs
+I was originally going to use JSPDF to create the smooth experience of the file automatically downloading to downloads like A03.
+Unfortunately after figuring out the whole thing, I realized that JSPDF does not support UTF-8 encoding which caused the PDFs
 to have weird spaces and half the sentences missing. 
-I'd rather the product be a 100% rather than just do fancy shit but be 0% useful.
+I'd rather the product do what it's supposed to a 100% well rather than just do fancy shit but be 0% useful.
 
 Which is why I used window.print().
 

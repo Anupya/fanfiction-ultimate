@@ -1,14 +1,3 @@
-// Listen for any changes to the URL of any tab.
-
-/*
-chrome.tabs.onUpdated.addListener(checkForValidUrl);
-chrome.pageAction.onClicked.addListener(RipStory); /* add listener to the icon */
-/*
-chrome.tabs.onSelectionChanged.addListener(function(tabId, info) {
-    selectedId = tabId;
-});
-*/
-
 var selectedId;
 
 chrome.tabs.onUpdated.addListener(checkForValidUrl); /* when user changes URL of current tab */
@@ -39,15 +28,6 @@ function checkForValidUrl(tabId, changeInfo, tab) {
         chrome.pageAction.hide(tabId);
     }
 }
-
-/*
-var entireWorksBtn = document.querySelector('#entireWork');
-var container =  document.querySelector('#chap_select');
-alert(container);
-
-entireWorksBtn.addEventListener("click", RipStory);
-alert("Finished adding event listener to button!");
-*/
 
 function RipStory(tab) {
     chrome.tabs.executeScript(null, {
