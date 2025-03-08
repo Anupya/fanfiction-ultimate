@@ -8,21 +8,19 @@ storyDiv.setAttribute('id', 'FullStoryDiv');
 StartRetrieving();
 
 function fetchPage(callback, url, chapter) {
-    //Update display percentage
-
     var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function(data) {
-            if (xhr.readyState == 4) {
-                if (xhr.status == 200) {
-                    var data = xhr.responseText;
-                    callback(data, chapter);
-                } else {
-                    callback(null, chapter);
-                }
+    xhr.onreadystatechange = function (data) {
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
+                var data = xhr.responseText;
+                callback(data, chapter);
+            } else {
+                callback(null, chapter);
             }
         }
-        // Note that any URL fetched here must be matched by a permission in
-        // the manifest.json file!
+    }
+    // Note that any URL fetched here must be matched by a permission in
+    // the manifest.json file!
     xhr.open('GET', url, true);
     xhr.send();
 };
@@ -78,7 +76,7 @@ function ParseStoryContent(story, chapter) {
     if (!story) {
         storyChapters[chapter] = "";
         fetchPage(ParseStoryContent, targetLocation.replace("t('.'t)", completedChapters + 1), completedChapters);
-    } 
+    }
     else {
         var root = document.implementation.createHTMLDocument();
         root.body.innerHTML = story;
@@ -90,7 +88,7 @@ function ParseStoryContent(story, chapter) {
             storyDiv.innerHTML = "";
 
             FinishStory();
-        } 
+        }
         else {
             fetchPage(ParseStoryContent, targetLocation.replace("t('.'t)", completedChapters + 1), completedChapters);
         }
@@ -98,11 +96,23 @@ function ParseStoryContent(story, chapter) {
 }
 
 function DownloadPDF(title) {
-  var mywindow = window.open('', 'PRINT', 'height= 800, width=800');
-  mywindow.document.write(storyDiv.innerHTML);
-  mywindow.document.title =  title;
-  mywindow.focus();
-  mywindow.print();
-  mywindow.close();
-  return true;
+    const windowWithFullFanfiction = window.open('', 'PRINT', 'height=800, width=800');
+
+    if (!windowWithFullFanfiction) {
+        console.error("Popup blocked! Allow pop-ups for this site.");
+        return false;
+
+    }
+
+    windowWithFullFanfiction.document.write(storyDiv.innerHTML);
+    windowWithFullFanfiction.document.title = title;
+    windowWithFullFanfiction.document.close();
+    windowWithFullFanfiction.focus();
+
+    setTimeout(() => {
+        windowWithFullFanfiction.print();
+        windowWithFullFanfiction.close();
+    }, 500); // Delay print to allow rendering
+
+    return true;
 }
