@@ -12,7 +12,7 @@ chrome.tabs.onActivated.addListener(({ tabId }) => {
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (!sender.tab?.id) return false; // Ensure sender has a valid tab ID
 
-    const scriptFile = message === "entireWork" ? "OnePage.js" :
+    const scriptFile = message === "entireWork" ? "EntireWork.js" :
         message === "download" ? "Download.js" : null;
 
     if (scriptFile) {

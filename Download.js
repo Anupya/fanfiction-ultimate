@@ -55,7 +55,7 @@ function compileChapters(story, chapter) {
         if (completedChapters >= storyChapters.length) {
             storyDiv.innerHTML = "";
 
-            compileChaptersInOnePage();
+            compileChaptersOnOnePage();
         }
         else {
             fetchChapter(compileChapters, targetLocation.replace("t('.'t)", completedChapters + 1), completedChapters);
@@ -63,7 +63,7 @@ function compileChapters(story, chapter) {
     }
 }
 
-function compileChaptersInOnePage() {
+function compileChaptersOnOnePage() {
     let title = document.title;
 
     if (title.indexOf("Chapter") != -1) {
