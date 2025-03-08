@@ -1,38 +1,38 @@
-var selectedId;
+let selectedId;
 
-chrome.tabs.onUpdated.addListener(checkForValidUrl); /* when user changes URL of current tab */
-chrome.tabs.onActivated.addListener(function (tabId, info) {
+// Listen for tab updates (when URL changes)
+chrome.tabs.onUpdated.addListener(checkForValidUrl);
+
+// Listen for tab activation (switching between tabs)
+chrome.tabs.onActivated.addListener(({ tabId }) => {
     selectedId = tabId;
 });
 
+// Message listener to execute scripts
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-    if (message === "entireWork") {
-        chrome.scripting.executeScript({
-            target: { tabId: sender.tab.id },
-            files: ["OnePage.js"]
-        });
-    }
-    else if (message === "download") {
-        chrome.scripting.executeScript({
-            target: { tabId: sender.tab.id },
-            files: ["Download.js"]
-        });
-    }
-    return true;
-})
+    if (!sender.tab?.id) return false; // Ensure sender has a valid tab ID
 
+    const scriptFile = message === "entireWork" ? "OnePage.js" :
+        message === "download" ? "Download.js" : null;
+
+    if (scriptFile) {
+        chrome.scripting.executeScript({
+            target: { tabId: sender.tab.id },
+            files: [scriptFile]
+        });
+    }
+
+    return true; // Keeps the message channel open if needed
+});
+
+// Checks if the URL is valid for the extension
 function checkForValidUrl(tabId, changeInfo, tab) {
-    if (tab.url?.indexOf('fanfiction') > -1) {
-        // ... show the page action.
-        chrome.pageAction?.show(tabId); /* if in fanfiction.net/s/, then extension icon is in color */
-    } else {
-        chrome.pageAction?.hide(tabId);
-    }
-}
+    if (!tab.url) return;
 
-function RipStory(tab) {
-    chrome.scripting.executeScript(null, {
-        target: { tabId: tabId },
-        files: ["OnePage.js"]
-    });
+    const isFanfiction = tab.url.includes('fanfiction');
+
+    // TODO: Needs to be migrated to v3
+    if (chrome.pageAction) { // This is a Manifest V2-ism
+        isFanfiction ? chrome.pageAction.show(tabId) : chrome.pageAction.hide(tabId);
+    }
 }
