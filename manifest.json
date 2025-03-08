@@ -12,7 +12,7 @@
     "content_scripts": [
         {
             "js": [
-                "CS_buttons.js"
+                "Buttons.js"
             ],
             "matches": [
                 "*://www.fanfiction.net/s/*"
