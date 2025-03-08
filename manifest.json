@@ -2,27 +2,33 @@
     "update_url": "https://clients2.google.com/service/update2/crx",
     "name": "FanfictionUltimate",
     "short_name": "FFUltimate",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "manifest_version": 3,
     "description": "The ultimate Chrome Extension for the best Fanfiction.net experience.",
     "background": {
         "service_worker": "background.js"
     },
     "homepage_url": "https://anupya.github.io",
-    "content_scripts": [{
-      "js": ["CS_buttons.js"],
-      "matches": ["*://www.fanfiction.net/s/*"],
-      "run_at": "document_start"
-    }],
+    "content_scripts": [
+        {
+            "js": [
+                "CS_buttons.js"
+            ],
+            "matches": [
+                "*://www.fanfiction.net/s/*"
+            ],
+            "run_at": "document_start"
+        }
+    ],
     "default_locale": "en",
     "action": {
         "default_icon": "icon_128.jpeg",
         "default_title": "FanFictionUltimate"
     },
     "icons": {
-      "16": "icon_16.jpeg",
-      "48": "icon_48.jpeg",
-      "128": "icon_128.jpeg"
+        "16": "icon_16.jpeg",
+        "48": "icon_48.jpeg",
+        "128": "icon_128.jpeg"
     },
     "permissions": [
         "unlimitedStorage",
